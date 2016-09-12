@@ -6,6 +6,8 @@ var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 
 var routes = require('./routes/index');
+var statisticsRouter = require('./routes/statistics');
+var inputRouter = require('./routes/input');
 
 var app = express();
 
@@ -22,8 +24,12 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', routes);
+app.use('/dataManipulation', inputRouter());
+app.use('/statistics', statisticsRouter());
 
-// catch 404 and forward to error handler
+// catch 404 and forward to error handler, 
+// for anything that application ist not able to handle
+// next statement dictates that next function that afterwards is called will handle created error
 app.use(function(req, res, next) {
   var err = new Error('Not Found');
   err.status = 404;
@@ -37,6 +43,7 @@ app.use(function(req, res, next) {
 if (app.get('env') === 'development') {
   app.use(function(err, req, res, next) {
     res.status(err.status || 500);
+    // render error message
     res.render('error', {
       message: err.message,
       error: err
@@ -55,4 +62,10 @@ app.use(function(err, req, res, next) {
 });
 
 
+// server itself is a node module
 module.exports = app;
+
+/*
+https://devdactic.com/restful-api-user-authentication-1/
+http://stackoverflow.com/questions/7990890/how-to-implement-login-auth-in-node-js
+*/

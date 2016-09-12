@@ -1,2 +1,4 @@
-node-modules/
-../.gitignore
+node_modules/
+.gitignore
+.gitignore~
+npm-debug.log
