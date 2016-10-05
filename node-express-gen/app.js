@@ -4,10 +4,29 @@ var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
+var morgan      = require('morgan');
+var mongoose    = require('mongoose');
+var passport  = require('passport');
+var config      = require('../config/database'); // get db config file
+var port        = process.env.PORT || 3000; // means: whatever is in the environment variable PORT, or 3000 if there's nothing there. Port might be automatically configured by another service. If set fix, this might cause a 500 gateway error. 
+var jwt         = require('jwt-simple');
+var LocalStrategy = require('passport-local').Strategy;
 
-var routes = require('./routes/index');
-var statisticsRouter = require('./routes/statistics');
-var inputRouter = require('./routes/input');
+
+//connect to database
+mongoose.connect(config.database);
+var db = mongoose.connection;
+db.on('error', console.error.bind(console, 'connection error:'));
+// write to console after first connection to db server is established
+db.once('open', function(){
+  // connected to database
+  console.log("Connected correctly to server!");
+});
+
+// call all routes
+var routes = require('./routes/indexRouter');
+var users = require('./routes/userRouter');
+var statistic = require('./routes/statisticRouter');
 
 var app = express();
 
@@ -23,13 +42,21 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.use('/', routes);
-app.use('/dataManipulation', inputRouter());
-app.use('/statistics', statisticsRouter());
+// passport configuration
+var User        = require('./models/userSchema'); // get the mongoose model
+app.use(passport.initialize());
+passport.use(new LocalStrategy(User.authenticate()));
+passport.serializeUser(User.serializeUser());
+passport.deserializeUser(User.deserializeUser());
 
-// catch 404 and forward to error handler, 
-// for anything that application ist not able to handle
-// next statement dictates that next function that afterwards is called will handle created error
+app.use(express.static(__dirname + '/public'));
+
+
+app.use('/', routes);
+app.use('/users', users);
+app.use('/statistics', statistic)
+
+// catch 404 and forward to error handler
 app.use(function(req, res, next) {
   var err = new Error('Not Found');
   err.status = 404;
@@ -43,7 +70,6 @@ app.use(function(req, res, next) {
 if (app.get('env') === 'development') {
   app.use(function(err, req, res, next) {
     res.status(err.status || 500);
-    // render error message
     res.render('error', {
       message: err.message,
       error: err
@@ -62,10 +88,4 @@ app.use(function(err, req, res, next) {
 });
 
 
-// server itself is a node module
 module.exports = app;
-
-/*
-https://devdactic.com/restful-api-user-authentication-1/
-http://stackoverflow.com/questions/7990890/how-to-implement-login-auth-in-node-js
-*/
