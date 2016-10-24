@@ -40,7 +40,7 @@
   			id="bs-example-navbar-collapse-1">
   			<ul class="nav navbar-nav">
   				<li><a href="index.html">Home</a></li>
-  				<li><a onclick="getStatisticsHTML()">Statistik</a></li>
+  				<li><a href="statistics.html">Statistik</a></li>
   				<li><a href="dataManipulation.html">Eingabe</a></li>
   			</ul>
   			<form class="navbar-form navbar-right" role="search">
@@ -69,20 +69,26 @@
   </div>
 </header>
 <div class="container mainpart">
-	<p>Herzlich Willkommen!</p>
+	<p id="welcomeNote">Herzlich Willkommen!</p>
+</div>
 </div>
 <footer>
 	<div class="container"></div>
 </footer>
 <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
-<script
-src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
 <!-- Include all compiled plugins (below), or include individual files as needed -->
-<script src="js/userAuthentication.js"</script>
+
 	<script src="js/bootstrap.min.js"></script>
-	<script src="js/button.js"></script>
-	<script src="js/pageRouting.js"></script>
-	<script src="js/index.js"></script>
+
+  <script src="js/footable.min.js"></script>
+
+  <script src="js/button.js"></script>
+  <script src="js/pageRouting.js"></script>  
+  <script src="js/index.js"></script>
+  <script src="js/userAuthentication.js"></script>
+
+  <!--<script src="js/statistic.js"></script>-->
 
 </body>
 

@@ -25,9 +25,6 @@
         },       
         error: function(xhr){
             alert("Error occured " + xhr.statusText + xhr.responseText);  
-        },
-        complete: function(){
-            alert("Process completed");
         }
             
     });
@@ -52,9 +49,6 @@ function addNewUser(){
         },       
         error: function(xhr){
             alert("Error occured " + xhr.statusText + xhr.responseText);  
-        },
-        complete: function(){
-            alert("Process completed");
         }
     });
 }

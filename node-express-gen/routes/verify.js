@@ -23,7 +23,6 @@ exports.getToken = function (user) {
 exports.verifyOrdinaryUser = function (req, res, next) {
     // check header or url parameters or post parameters for token
     console.log(req.headers);
-    console.log("Authorization: " +req.headers['authorization']);
     var token = req.body.token || req.query.token || req.headers['authorization'];
     // decode token
     if (token) {

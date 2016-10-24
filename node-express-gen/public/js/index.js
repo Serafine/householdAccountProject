@@ -10,6 +10,8 @@ function clickButtonSignIn (){
 	addNewUser();
 };
 
+/*
 function getStatisticsHTML(){
 	getPage('/statistics', true);
 };
+*/

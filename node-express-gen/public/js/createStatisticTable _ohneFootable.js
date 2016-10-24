@@ -4,11 +4,13 @@ exports.createStatisticsTable = function(dataForTable){
 
 	var tableElement ='';
 
-	tableElement += '<table id="mainTable" class="table footable footable-1" data-paging="true" data-sorting="true" data-filtering="true">';
-	tableElement +='<thead>';
+	//tableElement += '<table id="editing-example" class="table footable footable-1 footable-editing footable-editing-right footable-editing-no-view footable-filtering footable-filtering-right footable-paging footable-paging-center breakpoint breakpoint-md" data-sorting="true" data-filtering="true" data-paging="true" style="display: table;">';
+	tableElement +='<div class="table-responsive">'
+	tableElement += '<table class="table table-striped table-bordered table-hover">';
+	tableElement +='<thead class="thead-default">';
 	tableElement +='<tr>';
 	tableElement +='<th>Beschreibung</th>';
-	tableElement +='<th> Betrag</th>';
+	tableElement +='<th>Betrag</th>';
 	tableElement +='<th data-breakpoints="xs" data-type="date" data-format-string="MMMM Do YYYY">Datum</th>';
 	tableElement +='<th data-breakpoints="xs sm">Benutzer</th>';
 	tableElement +='<th data-breakpoints="xs">Kategorie</th>';
@@ -18,31 +20,27 @@ exports.createStatisticsTable = function(dataForTable){
 	tableElement += createRows(dataForTable);
 	tableElement +='</tbody>' ; 
 	tableElement +='</table>';  
-	//tableELement += getModalForEditing();
+	tableElement +='</div>';
+	//tableElement += getModalForEditing();      
 	return tableElement;
 };
 
 createRows = function(dataForTable){
 	var rowData = '';
 	for (var i = 0; i<dataForTable.length; i+= 1){
-		rowData += createOneRow(dataForTable[i],i);
+		rowData += createOneRow(dataForTable[i]);
 	}
 	return rowData;
 };
 
-createOneRow = function(dataForOneRow,index){
+createOneRow = function(dataForOneRow){
 	htmlForOneRow = '';
-	if (index===0){
-			htmlForOneRow += '<tr data-expanded="true">';
-	}
-	else{
-		htmlForOneRow += '<tr>';
-	}
-	htmlForOneRow += '<td>' + dataForOneRow.description + '</td>';
-	htmlForOneRow += '<td>' + dataForOneRow.amount + '</td>';
-	htmlForOneRow += '<td>' + dataForOneRow.date + '</td>';
-	htmlForOneRow += '<td>' + dataForOneRow.user + '</td>';
-	htmlForOneRow += '<td>' + dataForOneRow.category + '</td>';
+	htmlForOneRow += '<tr data-expanded="true">';
+	htmlForOneRow += '<td style="display: table-cell;">' + dataForOneRow.description + '</td>';
+	htmlForOneRow += '<td style="display: table-cell;">' + dataForOneRow.amount + '</td>';
+	htmlForOneRow += '<td style="display: table-cell;">' + dataForOneRow.date + '</td>';
+	htmlForOneRow += '<td style="display: table-cell;">' + dataForOneRow.user + '</td>';
+	htmlForOneRow += '<td style="display: table-cell;">' + dataForOneRow.category + '</td>';
 	htmlForOneRow += '</tr>'
 	return htmlForOneRow;
 }

@@ -7,21 +7,28 @@ var bodyParser = require('body-parser');
 var morgan      = require('morgan');
 var mongoose    = require('mongoose');
 var passport  = require('passport');
-var config      = require('../config/database'); // get db config file
+var mongoUtil = require('./public/js/mongoUtil');
 var port        = process.env.PORT || 3000; // means: whatever is in the environment variable PORT, or 3000 if there's nothing there. Port might be automatically configured by another service. If set fix, this might cause a 500 gateway error. 
 var jwt         = require('jwt-simple');
 var LocalStrategy = require('passport-local').Strategy;
 
 
+mongoUtil.connectToServer( function( err ) {
+    var db = mongoUtil.getDb();
+    db.on('error', console.error.bind(console, 'connection error:'));
+    // write to console after first connection to db server is established
+    db.once('open', function(){
+    // connected to database
+    console.log("Connected correctly to server!");
+  });
+});
+
+/*
 //connect to database
 mongoose.connect(config.database);
 var db = mongoose.connection;
-db.on('error', console.error.bind(console, 'connection error:'));
-// write to console after first connection to db server is established
-db.once('open', function(){
-  // connected to database
-  console.log("Connected correctly to server!");
-});
+*/
+
 
 // call all routes
 var routes = require('./routes/indexRouter');
