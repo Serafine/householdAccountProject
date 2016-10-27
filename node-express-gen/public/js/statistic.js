@@ -6,7 +6,7 @@ $(document).ready(function(){
 	var $modal = $('#editor-modal'),
 	$editor = $('#editor'),
 	$editorTitle = $('#editor-title'),
-	ft = FooTable.init('#editing-example', {
+	ft = FooTable.init('#mainTable', {
 		editing: {
 			enabled: true,
 			addRow: function(){

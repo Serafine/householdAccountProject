@@ -40,12 +40,27 @@ createOneRow = function(dataForOneRow,index){
 	}
 	htmlForOneRow += '<td>' + dataForOneRow.description + '</td>';
 	htmlForOneRow += '<td>' + dataForOneRow.amount + '</td>';
-	htmlForOneRow += '<td>' + dataForOneRow.date + '</td>';
+	htmlForOneRow += getDateInformation(dataForOneRow.date);
+	//htmlForOneRow += '<td>' + dataForOneRow.date + '</td>';
 	htmlForOneRow += '<td>' + dataForOneRow.user + '</td>';
 	htmlForOneRow += '<td>' + dataForOneRow.category + '</td>';
 	htmlForOneRow += '</tr>'
 	return htmlForOneRow;
-}
+};
+
+		//split date information here
+getDateInformation = function(dateInformationAsObject){
+	dateString = '<td>';	
+	date = dateInformationAsObject.getDate();
+	console.log("Date: " + date);
+	month = dateInformationAsObject.getMonth();
+	console.log("month: " + month);
+	year = dateInformationAsObject.getFullYear();
+	console.log("year: " + year);
+	dateString += date + '.' + month+1 + '.' + year;
+	dateString += '</td>';
+	return dateString;	
+};
 
 getModalForEditing = function(){
 
