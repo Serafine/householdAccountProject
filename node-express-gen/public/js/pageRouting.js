@@ -12,9 +12,11 @@ function getPage(url, needsAuthentication){
 		error: function(xhr){
 			alert("Error occured " + xhr.statusText + xhr.responseText);  
 		},
+		
 		complete: function(){				
-			$('#mainTable').footable();
+			startFooTable();
 		}
+		
  	})
 	.done(function(newTable){
 		if(newTable.length != 0){
@@ -24,5 +26,67 @@ function getPage(url, needsAuthentication){
 	})
 	
 };
+function startFooTable(){
+	var $modal = $('#editor-modal'),
+	$editor = $('#editor'),
+	$editorTitle = $('#editor-title'),
+	ft = FooTable.init('#mainTable', {
+		editing: {
+			enabled: true,
+			addRow: function(){
+				$modal.removeData('row');
+				$editor[0].reset();
+				$editorTitle.text('Add a new row');
+				$modal.modal('show');
+			},
+			editRow: function(row){
+				var values = row.val();
+				$editor.find('#id').val(values.id);
+				$editor.find('#description').val(values.description);
+				$editor.find('#amount').val(values.amount);
+				if(window.chrome){
+					var dateArray = values.date.split('.');
+					var newDate = dateArray[2] + '-' + dateArray[1] + '-' + dateArray[0];
+					$editor.find('#date').val(newDate);	
+				}
+				else{
+					$editor.find('#date').val(values.date);
+				}								
+				$editor.find('#user').val(values.user);
+				$editor.find('#category').val(values.category);
 
-//TODO: how to get correct page if authentication worked out
+				$modal.data('row', row);
+				$editorTitle.text('Edit row #' + values.id);
+				$modal.modal('show');
+			},
+			deleteRow: function(row){
+				if (confirm('Are you sure you want to delete the row?')){
+					row.delete();
+				}
+			}
+		}
+	}),
+	uid = 10;
+
+$editor.on('submit', function(e){
+	if (this.checkValidity && !this.checkValidity()) return;
+	e.preventDefault();
+	var row = $modal.data('row'),
+		values = {
+			id: $editor.find('#id').val(),
+			description: $editor.find('#description').val(),
+			amount: $editor.find('#amount').val(),
+			date: moment($editor.find('#date').val(), 'YYYY-MM-DD'),
+			user: $editor.find('#user').val(),
+			category: $editor.find('#category').val()
+		};
+
+	if (row instanceof FooTable.Row){
+		row.val(values);
+	} else {
+		values.id = uid++;
+		ft.rows.add(values);
+	}
+	$modal.modal('hide');
+});
+}

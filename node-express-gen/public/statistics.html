@@ -80,33 +80,33 @@
             <div class="modal-body">
                 <input type="number" id="id" name="id" class="hidden"/>
                 <div class="form-group required">
-                    <label for="firstName" class="col-sm-3 control-label">First Name</label>
+                    <label for="description" class="col-sm-3 control-label">Beschreibung</label>
                     <div class="col-sm-9">
-                        <input type="text" class="form-control" id="firstName" name="firstName" placeholder="First Name" required>
+                        <input type="text" class="form-control" id="description" name="description" placeholder="Beschreibung" required>
                     </div>
                 </div>
                 <div class="form-group required">
-                    <label for="lastName" class="col-sm-3 control-label">Last Name</label>
+                    <label for="amount" class="col-sm-3 control-label">Betrag</label>
                     <div class="col-sm-9">
-                        <input type="text" class="form-control" id="lastName" name="lastName" placeholder="Last Name" required>
+                        <input type="number" class="form-control" id="amount" name="amount" placeholder="Betrag" required>
                     </div>
                 </div>
                 <div class="form-group">
-                    <label for="jobTitle" class="col-sm-3 control-label">Job Title</label>
+                    <label for="date" class="col-sm-3 control-label">Datum</label>
                     <div class="col-sm-9">
-                        <input type="text" class="form-control" id="jobTitle" name="jobTitle" placeholder="Job Title">
-                    </div>
-                </div>
-                <div class="form-group required">
-                    <label for="startedOn" class="col-sm-3 control-label">Started On</label>
-                    <div class="col-sm-9">
-                        <input type="date" class="form-control" id="startedOn" name="startedOn" placeholder="Started On" required>
+                        <input type="date" class="form-control" id="date" name="date" placeholder="Datum">
                     </div>
                 </div>
                 <div class="form-group">
-                    <label for="dob" class="col-sm-3 control-label">Date of Birth</label>
+                    <label for="user" class="col-sm-3 control-label">Benutzer</label>
                     <div class="col-sm-9">
-                        <input type="date" class="form-control" id="dob" name="dob" placeholder="Date of Birth">
+                        <input type="text" class="form-control" id="user" name="user" placeholder="Benutzer">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="category" class="col-sm-3 control-label">Kategorie</label>
+                    <div class="col-sm-9">
+                        <input type="text" class="form-control" id="category" name="category" placeholder="Kategorie">
                     </div>
                 </div>
             </div>
@@ -134,65 +134,7 @@
         <script src="js/footable.js"></script>
         <script src="js/button.js"></script>    
         <script src="js/userAuthentication.js"></script>
+        <script src="js/moment.js"></script>
         <script src="js/statistic.js"></script>
-        <!--script>
-            jQuery(function($){
-        var $modal = $('#editor-modal'),
-            $editor = $('#editor'),
-            $editorTitle = $('#editor-title'),
-            ft = FooTable.init('#editing-example', {
-                editing: {
-                    enabled: true,
-                    addRow: function(){
-                        $modal.removeData('row');
-                        $editor[0].reset();
-                        $editorTitle.text('Add a new row');
-                        $modal.modal('show');
-                    },
-                    editRow: function(row){
-                        var values = row.val();
-                        $editor.find('#id').val(values.id);
-                        $editor.find('#firstName').val(values.firstName);
-                        $editor.find('#lastName').val(values.lastName);
-                        $editor.find('#jobTitle').val(values.jobTitle);
-                        $editor.find('#startedOn').val(values.startedOn.format('YYYY-MM-DD'));
-                        $editor.find('#dob').val(values.dob.format('YYYY-MM-DD'));
-
-                        $modal.data('row', row);
-                        $editorTitle.text('Edit row #' + values.id);
-                        $modal.modal('show');
-                    },
-                    deleteRow: function(row){
-                        if (confirm('Are you sure you want to delete the row?')){
-                            row.delete();
-                        }
-                    }
-                }
-            }),
-            uid = 10;
-
-        $editor.on('submit', function(e){
-            if (this.checkValidity && !this.checkValidity()) return;
-            e.preventDefault();
-            var row = $modal.data('row'),
-                values = {
-                    id: $editor.find('#id').val(),
-                    firstName: $editor.find('#firstName').val(),
-                    lastName: $editor.find('#lastName').val(),
-                    jobTitle: $editor.find('#jobTitle').val(),
-                    startedOn: moment($editor.find('#startedOn').val(), 'YYYY-MM-DD'),
-                    dob: moment($editor.find('#dob').val(), 'YYYY-MM-DD')
-                };
-
-            if (row instanceof FooTable.Row){
-                row.val(values);
-            } else {
-                values.id = uid++;
-                ft.rows.add(values);
-            }
-            $modal.modal('hide');
-        });
-    });
-    </script-->
-    </body>
+      </body>
 </html>
