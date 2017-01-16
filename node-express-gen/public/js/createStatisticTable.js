@@ -9,7 +9,7 @@ exports.createStatisticsTable = function(dataForTable){
 	tableElement +='<tr>';
 	tableElement +='<th data-name="description">Beschreibung </th>';
 	tableElement +='<th  data-name="amount"> Betrag </th>';
-	tableElement +='<th data-name="date" data-breakpoints="xs" data-type="date" data-format-string="MMMM Do YYYY">Datum</th>';
+	tableElement +='<th data-name="datum" data-breakpoints="xs" data-type="date" data-format-string="MMMM Do YYYY">Datum</th>';
 	tableElement +='<th data-name="user" data-breakpoints="xs sm">Benutzer</th>';
 	tableElement +='<th data-name="category" data-breakpoints="xs">Kategorie</th>';
 	tableElement +='</tr>';
@@ -55,7 +55,7 @@ getDateInformation = function(dateInformationAsObject){
 	}
 	month = dateInformationAsObject.getMonth();
 	year = dateInformationAsObject.getFullYear();
-	dateString += date + '.' + month+1 + '.' + year;
+	dateString +=  year + '-' + month+1 + '-' + date;
 	dateString += '</td>';
 	return dateString;	
 };

@@ -5,8 +5,8 @@ var bodyParser  = require('body-parser');
 var morgan      = require('morgan');
 var mongoose    = require('mongoose');
 var passport	= require('passport');
-var config      = require('./config/database'); // get db config file
-var User        = require('./app/models/user'); // get the mongoose model
+var config      = require('/config/database'); // get db config file
+var User        = require('/app/models/user'); // get the mongoose model
 var port        = process.env.PORT || 3000; // means: whatever is in the environment variable PORT, or 3000 if there's nothing there. Port might be automatically configured by another service. If set fix, this might cause a 500 gateway error. 
 var jwt         = require('jwt-simple');
 
@@ -24,7 +24,7 @@ app.use(morgan('dev'));
 // use passport package in this application
 app.use(passport.initialize());
 
-app.use(express.static(__dirname + '/public'));
+app.use(express.static(__dirname));
 
 /*
 // demo route (GET http://localhost:3000)
@@ -93,7 +93,8 @@ routes.post('/authenticate', function(req, res){
 
 });
 // route to a restricted info (GET http://localhost:3000/api/statistics)
-routes.get('/statistics', passport.authenticate('jwt', {session: false}), function (req,res){
+routes.all('*', passport.authenticate('jwt', {session: false}), function (req,res){
+	console.log("Check user authentication");
 	console.log(req.headers);
 	console.log('bodyName:', req.body.name);
 	var token = getToken(req.headers);
@@ -107,7 +108,7 @@ routes.get('/statistics', passport.authenticate('jwt', {session: false}), functi
 			res.status(403).send({success: false, msg: 'Authentication failed. User not found'});
 		}
 		else{
-			//res.json({success: true, msg: 'Welcome to the member area' + user.name + '!' });
+			res.json({success: true, msg: 'Welcome to the member area' + user.name + '!' });
 			res.sendFile('/statistics.html', { root: path.join(__dirname, '/node-express-gen/public') });
 		}
 		});
@@ -134,8 +135,7 @@ getToken = function(headers){
 
 
 //connect the api routes under /
-app.use('/', routes);
-console.log("Server has started");
-
+//app.use('/', routes);
+//console.log("Server has started");
 
 app.listen(port);

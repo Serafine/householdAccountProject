@@ -3,13 +3,15 @@ var express = require('express');
 var statisticRouter = express.Router();
 var path = require('path');
 var mongoUtil = require('../public/js/mongoUtil');
-var AccountEntry = require('../models/accountEntrySchema')
+var AccountEntry = require('../models/accountEntrySchema');
 var HtmlTable = require("../public/js/createStatisticTable");
+
 
 
 statisticRouter.route('/')
 // route to a restricted info (GET http://localhost:3000/statistics)
 .get(function (req,res, next){
+	console.log("Entered statistics route");
 	// first step: conntect mongo and get all data entries as json data
 	//var db = mongoUtil.getDb();
 	AccountEntry.find({}, function(err, docs){
@@ -29,6 +31,8 @@ statisticRouter.route('/')
 	// send json data to js script which creates html for table
 
 })
+
+
 .post(function(req,res){
 	var newEntry = new AccountEntry(
 	{

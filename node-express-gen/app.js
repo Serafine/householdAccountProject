@@ -11,6 +11,10 @@ var mongoUtil = require('./public/js/mongoUtil');
 var port        = process.env.PORT || 3000; // means: whatever is in the environment variable PORT, or 3000 if there's nothing there. Port might be automatically configured by another service. If set fix, this might cause a 500 gateway error. 
 var jwt         = require('jwt-simple');
 var LocalStrategy = require('passport-local').Strategy;
+// call all routes
+var index = require('./routes/indexRouter');
+var users = require('./routes/userRouter');
+var statistic = require('./routes/statisticRouter');
 
 
 mongoUtil.connectToServer( function( err ) {
@@ -29,12 +33,6 @@ mongoose.connect(config.database);
 var db = mongoose.connection;
 */
 
-
-// call all routes
-var routes = require('./routes/indexRouter');
-var users = require('./routes/userRouter');
-var statistic = require('./routes/statisticRouter');
-
 var app = express();
 
 // view engine setup
@@ -50,7 +48,7 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 // passport configuration
-var User        = require('./models/userSchema'); // get the mongoose model
+var User = require('./models/userSchema'); // get the mongoose model
 app.use(passport.initialize());
 passport.use(new LocalStrategy(User.authenticate()));
 passport.serializeUser(User.serializeUser());
@@ -58,13 +56,13 @@ passport.deserializeUser(User.deserializeUser());
 
 app.use(express.static(__dirname + '/public'));
 
-
-app.use('/', routes);
+app.use('/', index);
 app.use('/users', users);
 app.use('/statistics', statistic)
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
+  console.log(err);
   var err = new Error('Not Found');
   err.status = 404;
   next(err);

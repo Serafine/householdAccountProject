@@ -44,17 +44,9 @@ function startFooTable(){
 				$editor.find('#id').val(values.id);
 				$editor.find('#description').val(values.description);
 				$editor.find('#amount').val(values.amount);
-				if(window.chrome){
-					var dateArray = values.date.split('.');
-					var newDate = dateArray[2] + '-' + dateArray[1] + '-' + dateArray[0];
-					$editor.find('#date').val(newDate);	
-				}
-				else{
-					$editor.find('#date').val(values.date);
-				}								
+				$editor.find('#datum').val(values.datum);							
 				$editor.find('#user').val(values.user);
 				$editor.find('#category').val(values.category);
-
 				$modal.data('row', row);
 				$editorTitle.text('Edit row #' + values.id);
 				$modal.modal('show');
@@ -76,7 +68,7 @@ $editor.on('submit', function(e){
 			id: $editor.find('#id').val(),
 			description: $editor.find('#description').val(),
 			amount: $editor.find('#amount').val(),
-			date: moment($editor.find('#date').val(), 'YYYY-MM-DD'),
+			datum: $editor.find('#datum').val(),
 			user: $editor.find('#user').val(),
 			category: $editor.find('#category').val()
 		};

@@ -1,6 +1,6 @@
 var User = require('../models/userSchema');
 var jwt = require('jsonwebtoken'); // used to create, sign, and verify tokens
-var config = require('../../config/database');
+var config = require('../config/database');
 
 /**
  * [Returns a JWT object with a period for expiration]
